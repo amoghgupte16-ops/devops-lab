@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run hello script
+        run: python hello.py
