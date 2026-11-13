@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  run-script:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Get the code
@@ -16,5 +16,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run hello script
-        run: python hello.py
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest -v
