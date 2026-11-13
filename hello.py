@@ -1,1 +1,1 @@
-prnt("Hello from my DevOps lab!")
+print("Hello from my DevOps lab!")
