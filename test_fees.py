@@ -9,5 +9,5 @@ def test_fractional_rate():
 def test_zero_balance():
     assert management_fee(0, 1.5) == 0
 
-def test_percent():
+def test_two_percent_fee():
     assert management_fee(50000, 2) ==  1000
