@@ -24,4 +24,15 @@ jobs:
       - name: Run tests
         run: python -m pytest -v
 
-   
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v6
+
+      - name: Build Docker image
+        run: docker build -t health-report .
+
+      - name: Run the container
+        run: docker run --rm health-report
