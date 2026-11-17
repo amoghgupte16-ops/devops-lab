@@ -36,3 +36,25 @@ jobs:
 
       - name: Run the container
         run: docker run --rm health-report
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v6
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build the image
+        run: docker build -t ghcr.io/amoghgupte16-ops/health-report:latest -t ghcr.io/amoghgupte16-ops/health-report:${{ github.sha }} .
+
+      - name: Push the image
+        run: |
+          docker push ghcr.io/amoghgupte16-ops/health-report:latest
+          docker push ghcr.io/amoghgupte16-ops/health-report:${{ github.sha }}
